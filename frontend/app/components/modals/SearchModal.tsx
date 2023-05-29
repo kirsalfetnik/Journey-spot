@@ -1,17 +1,18 @@
 'use client'
 
-import { formatISO } from "date-fns";
+import { formatISO } from "date-fns"
 import qs from "query-string"
-import { useRouter, useSearchParams } from "next/navigation";
-import dynamic from "next/dynamic";
-import { useCallback, useMemo, useState } from "react";
-import { Range } from "react-date-range";
+import { useRouter, useSearchParams } from "next/navigation"
+import dynamic from "next/dynamic"
+import { useCallback, useMemo, useState } from "react"
+import { Range } from "react-date-range"
 
-import Modal from "./Modal";
-import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
-import Heading from "../Heading";
+import Modal from "./Modal"
+import Heading from "../Heading"
+import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect"
+import Calendar from "../inputs/Calendar"
 
-import useSearchModal from "@/app/hooks/useSearchModal";
+import useSearchModal from "@/app/hooks/useSearchModal"
 
 enum STEPS {
     LOCATION = 0,
@@ -130,13 +131,30 @@ const SearchModal = () => {
         </div>
     )
 
+    if (step === STEPS.DATE) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading 
+                    title='When do you plan to go?'
+                    subtitle='Make sure everyone is free!'
+                />
+                <Calendar 
+                    value={dateRange}
+                    onChange={(value) => setDateRange(value.selection)}
+                />
+            </div>
+        )
+    }
+
     return (
         <Modal 
             isOpen={searchModal.isOpen}
             onClose={searchModal.onClose}
-            onSubmit={searchModal.onOpen}
+            onSubmit={onSubmit}
             title='Filters'
-            actionLabel='Search'
+            actionLabel={actionLabel}
+            secondaryActionLabel={secondaryActionLabel}
+            secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
             body={bodyContent}
         />
     );
