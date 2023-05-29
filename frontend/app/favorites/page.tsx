@@ -7,7 +7,7 @@ import getFavoriteListings from "../actions/getFavoriteListings"
 
 const ListingPage = async () => {
     const listings = await getFavoriteListings()
-    const currentUser = getCurrentUser()
+    const currentUser = await getCurrentUser()
 
     if (listings.length === 0) {
         return (
