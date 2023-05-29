@@ -12,7 +12,7 @@ const ReservationsPage = async () => {
         return (
             <ClientOnly>
                 <EmptyState 
-                    title='Unauthrized'
+                    title='Unauthorized'
                     subtitle='Please login'
                 />
             </ClientOnly>
